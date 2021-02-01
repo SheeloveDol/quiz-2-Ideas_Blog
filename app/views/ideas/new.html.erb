@@ -1,0 +1,22 @@
+<h1>Got an Idea?</h1>
+
+<% if @idea.errors.any? %>
+  <ul>
+    <% @idea.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end%>
+
+
+<%= form_for @idea do |f| %>
+  <div>
+    <%= f.label :title %> <br>
+    <%= f.text_field :title %>
+  </div><br>
+  <div>
+    <%= f.label :description %> <br>
+    <%= f.text_area :description, size: "50x4" %>
+  </div><br>
+  <%= f.submit %>
+<% end %>
