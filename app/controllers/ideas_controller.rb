@@ -1,4 +1,6 @@
 class IdeasController < ApplicationController
+
+  before_action :find_idea, only: [:show, :edit, :update, :destroy]
   
   def new 
     @idea = Idea.new
@@ -9,7 +11,6 @@ class IdeasController < ApplicationController
   end
 
   def create 
-    idea_params = params.require(:idea).permit(:title, :description)
     @idea = Idea.new idea_params
     if @idea.save
       flash[:notice] = "Idea created successfully"
@@ -20,16 +21,12 @@ class IdeasController < ApplicationController
   end
 
   def show 
-    @idea = Idea.find params[:id]
   end
 
   def edit 
-    @idea = Idea.find params[:id]
   end
 
   def update 
-    idea_params = params.require(:idea).permit(:title, :description)
-    @idea = Idea.find params[:id]
     if @idea.update idea_params
       flash[:notice] = "Idea edited successfully"
       redirect_to idea_path(@idea)
@@ -39,9 +36,18 @@ class IdeasController < ApplicationController
   end
 
   def destroy 
-    @idea = Idea.find params[:id]
     @idea.destroy
     redirect_to ideas_path
   end
 
+
+  private 
+
+  def find_idea 
+    @idea = Idea.find params[:id]
+  end
+
+  def idea_params 
+    idea_params = params.require(:idea).permit(:title, :description)
+  end
 end
