@@ -11,7 +11,8 @@
   </head>
 
   <body>
-    <%= render 'layouts/navigation' %>
+    <%= render 'layouts/navigation' %> <br>
+
     <%= flash[:notice] || flash[:alert] %>
     <%= yield %>
   </body>

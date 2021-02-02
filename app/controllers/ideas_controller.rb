@@ -1,6 +1,7 @@
 class IdeasController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_idea, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
   
   def new 
     @idea = Idea.new
@@ -54,4 +55,9 @@ class IdeasController < ApplicationController
   def idea_params 
     idea_params = params.require(:idea).permit(:title, :description)
   end
+
+  def authorize_user!
+    redirect_to idea_path(@idea), alert: "Impossible Action" unless can?(:crud, @ideas)
+  end
+
 end
