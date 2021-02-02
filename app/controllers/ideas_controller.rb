@@ -12,6 +12,8 @@ class IdeasController < ApplicationController
 
   def create 
     @idea = Idea.new idea_params
+    @idea.user = current_user
+    
     if @idea.save
       flash[:notice] = "Idea created successfully"
       redirect_to idea_path(@idea)
@@ -21,6 +23,8 @@ class IdeasController < ApplicationController
   end
 
   def show 
+    @review = Review.new
+    @reviews = @idea.reviews.order(created_at: :desc)
   end
 
   def edit 
